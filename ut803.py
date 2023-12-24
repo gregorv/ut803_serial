@@ -161,21 +161,38 @@ class UT803:
 
 
 def prettyValueFormat(value, unit=""):
+    negative = False
+    if value < 0:
+      negative = True
+      value = value * -1
     if value == 0.0:
-        return value, unit
-    if value < 1e-9:
-        return value*1e12, "p"+unit
-    if value < 1e-6:
-        return value*1e9, "n"+unit
-    if value < 1e-3:
-        return value*1e6, "u"+unit
-    if value < 1:
-        return value*1e3, "m"+unit
-    if value < 1e3:
-        return value, unit
-    if value < 1e6:
-        return value*1e-3, "k"+unit
-    return value*1e-6, "M"+unit
+        value = value
+        unit = unit
+    elif value < 1e-9:
+        value = value*1e12
+        unit = "p"+unit
+    elif value < 1e-6:
+        value = value*1e9
+        unit = "n"+unit
+    elif value < 1e-3:
+        value = value*1e6
+        unit = "u"+unit
+    elif value < 1:
+        value = value*1e3
+        unit = "m"+unit
+    elif value < 1e3:
+        value = value
+        unit = unit
+    elif value < 1e6:
+        value = value*1e-3
+        unit = "k"+unit
+    else:
+        value = value*1e-6
+        unit = "M"+unit
+
+    if negative:
+      value = value * -1
+    return value, unit
 
 def interactive():
     import argparse
